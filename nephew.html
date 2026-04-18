@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎来到派派的成长空间</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #6C757D;
+            --accent-color: #FF6B9D;
+            --accent-hover: #FF5287;
+            --accent-secondary: #7C4DFF;
+            --border-color: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --highlight-color: rgba(255, 107, 157, 0.1);
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-pink: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%);
+            --gradient-purple: linear-gradient(135deg, #7C4DFF 0%, #B388FF 100%);
+            --gradient-blue: linear-gradient(135deg, #4A90E2 0%, #67B3FF 100%);
+            --gradient-green: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1A2E;
+            --card-bg: #16213E;
+            --text-primary: #E8E8E8;
+            --text-secondary: #B0B0B0;
+            --accent-color: #FF6B9D;
+            --accent-hover: #FF5287;
+            --accent-secondary: #B388FF;
+            --border-color: #2A2A3E;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.4);
+            --highlight-color: rgba(255, 107, 157, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+            opacity: 0;
+            animation: pageFadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; filter: blur(10px); }
+            to { opacity: 1; filter: blur(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--gradient-pink);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--card-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-color);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero-avatar:hover {
+            transform: scale(1.08) rotate(5deg);
+            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .hero-avatar::after {
+            content: '👆点击放大';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .hero-avatar:hover::after {
+            opacity: 1;
+        }
+
+        .hero-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .hero-name span {
+            background: var(--gradient-pink);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-age {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .section {
+            padding: 50px 0;
+            animation: slideUp 0.8s ease-out both;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.3s; }
+        .section:nth-child(3) { animation-delay: 0.5s; }
+        .section:nth-child(4) { animation-delay: 0.7s; }
+        .section:nth-child(5) { animation-delay: 0.9s; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-pink);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px var(--shadow-hover);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .card-icon.eating { background: var(--gradient-pink); }
+        .card-icon.sleeping { background: var(--gradient-purple); }
+        .card-icon.playing { background: var(--gradient-blue); }
+        .card-icon.milestone { background: var(--gradient-green); }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title-text {
+            flex: 1;
+        }
+
+        .card-toggle {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px;
+        }
+
+        .card-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .card-content.collapsed {
+            max-height: 150px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-content.collapsed::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(transparent, var(--card-bg));
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            transform: scale(1.08);
+            background: var(--accent-hover);
+        }
+
+        .milestone-list {
+            margin-top: 20px;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .milestone-item:hover {
+            background: var(--highlight-color);
+        }
+
+        .milestone-item.completed {
+            border-left-color: var(--success-color);
+        }
+
+        .milestone-item.in-progress {
+            border-left-color: var(--warning-color);
+        }
+
+        .milestone-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .milestone-item.completed .milestone-icon {
+            background: var(--success-color);
+        }
+
+        .milestone-item.in-progress .milestone-icon {
+            background: var(--warning-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .milestone-info {
+            flex: 1;
+        }
+
+        .milestone-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .milestone-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .milestone-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .milestone-item.completed .milestone-status {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .milestone-item.in-progress .milestone-status {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-green);
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .quote-carousel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+        }
+
+        .quote-content {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            transition: var(--transition);
+            min-height: 60px;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--accent-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            font-size: 20px;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent-hover);
+            transform: translateY(-5px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            transform: scale(0.8);
+            transition: var(--transition);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .modal-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: var(--transition);
+            pointer-events: auto;
+        }
+
+        .modal-btn:hover {
+            background: white;
+            color: var(--accent-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: white;
+            color: var(--accent-color);
+        }
+
+        .modal-counter {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        ::selection {
+            background: var(--highlight-color);
+            color: var(--text-primary);
+        }
+
+        .add-record-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--accent-color);
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .add-record-btn:hover {
+            border-color: var(--accent-color);
+            background: var(--highlight-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 3px solid var(--card-bg);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .timeline-text {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 40px 0; }
+            .hero-avatar { width: 120px; height: 120px; }
+            .hero-name { font-size: 28px; }
+            .hero-stats { gap: 15px; }
+            .stat-item { padding: 12px 18px; }
+            .stat-value { font-size: 24px; }
+            .section { padding: 35px 0; }
+            .section-title { font-size: 22px; }
+            .card { padding: 20px; }
+            .photo-gallery { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+            .quote-carousel { padding: 30px 20px; }
+            .back-to-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+            .nav-buttons { display: none; }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">🌸 欢迎来到派派的成长空间</div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="scrollToSection('home')">首页</button>
+                <button class="nav-btn" onclick="scrollToSection('eating')">饮食</button>
+                <button class="nav-btn" onclick="scrollToSection('sleeping')">睡眠</button>
+                <button class="nav-btn" onclick="scrollToSection('playing')">玩耍</button>
+                <button class="nav-btn" onclick="scrollToSection('milestones')">成长</button>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <img src="派派.jpg" alt="派派照片" class="hero-avatar" onclick="previewImage(this.src)">
+            <h1 class="hero-name"><span>黄屿禾</span> ✨</h1>
+            <p class="hero-age">小名：派派 | 1岁宝宝</p>
+            <p class="hero-age" style="font-size: 14px;">生日：2025.7.21</p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">岁啦</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">9</div>
+                    <div class="stat-label">个月大</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">已完成里程碑</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">进行中目标</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="eating">
+        <div class="container">
+            <h2 class="section-title">🍽️ 饮食记录</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon eating">🍼</div>
+                        <div class="card-title-text">派派的美食时光</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派现在主要以配方奶和辅食为主。每天喝4-5次奶，最爱喝苹果汁！辅食方面喜欢各种泥糊状食物。最搞笑的是派派吃东西的时候会发出"好吃好吃"的声音，虽然还不会说话，但是表情超可爱！</p>
+                    <div class="tags">
+                        <span class="tag">配方奶</span>
+                        <span class="tag">辅食</span>
+                        <span class="tag">最爱苹果汁</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon eating">📸</div>
+                        <div class="card-title-text">饮食照片集</div>
+                    </div>
+                </div>
+                <div class="photo-gallery">
+                    <div class="photo-item" onclick="previewGalleryImage(1)">
+                        <img src="派派吃饭的时候.jpg" alt="派派吃饭">
+                        <div class="photo-overlay">�️ 派派吃饭的样子</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(0)">
+                        <img src="派派.jpg" alt="派派">
+                        <div class="photo-overlay">😊 派派的可爱模样</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="sleeping">
+        <div class="container">
+            <h2 class="section-title">😴 睡眠记录</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon sleeping">🌙</div>
+                        <div class="card-title-text">派派的睡眠习惯</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派现在每天睡两个小时左右。晚上一般9点左右才睡，睡觉的时候喜欢抱着小玩具，特别可爱！</p>
+                    <div class="tags">
+                        <span class="tag">晚上9点睡</span>
+                        <span class="tag">小玩具</span>
+                        <span class="tag">每天睡2小时</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon sleeping">📸</div>
+                        <div class="card-title-text">睡眠照片集</div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                    <div style="font-size: 48px; margin-bottom: 16px;">�</div>
+                    <div>还没有睡眠照片，敬请期待！</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="playing">
+        <div class="container">
+            <h2 class="section-title">🎮 玩耍时光</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">🧸</div>
+                        <div class="card-title-text">派派的最爱游戏</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派最喜欢的事情就是玩！喜欢玩各种玩具，一摇就会笑。他喜欢掀毛巾、玩这些摇，所有的玩具都喜欢摇。他喜欢吃玩具，但是还不会听歌，因为他还很小。</p>
+                    <div class="tags">
+                        <span class="tag">玩玩具</span>
+                        <span class="tag">喜欢摇</span>
+                        <span class="tag">掀毛巾</span>
+                        <span class="tag">吃玩具</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">📸</div>
+                        <div class="card-title-text">玩耍照片集</div>
+                    </div>
+                </div>
+                <div class="photo-gallery">
+                    <div class="photo-item" onclick="previewGalleryImage(4)">
+                        <img src="派派玩玩具的时候.jpg" alt="派派玩玩具">
+                        <div class="photo-overlay">🧸 玩玩具时间</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(2)">
+                        <img src="派派和妈妈玩耍的时候.jpg" alt="和妈妈玩耍">
+                        <div class="photo-overlay">👩‍👦 和妈妈玩耍</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(3)">
+                        <img src="派派求知的眼神.jpg" alt="好奇的眼神">
+                        <div class="photo-overlay">🤔 好奇的小眼神</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(5)">
+                        <img src="派派的两副面孔.jpg" alt="可爱表情">
+                        <div class="photo-overlay">� 可爱的表情</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">📝</div>
+                        <div class="card-title-text">成长小日记</div>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">时间待定</div>
+                        <div class="timeline-text">去公园玩，看到小狗特别激动！</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月28日</div>
+                        <div class="timeline-text">派派学会翻身了！从仰卧到俯卧，特别开心！</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">🎬</div>
+                        <div class="card-title-text">派派的精彩视频</div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <video width="100%" controls style="margin-bottom: 20px;">
+                        <source src="派派洗澡的视频.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">🛁 派派洗澡时间</p>
+                    
+                    <video width="100%" controls style="margin-bottom: 20px;">
+                        <source src="派派的钢琴家时期.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">🎹 派派的钢琴家时期</p>
+                    
+                    <video width="100%" controls style="margin-bottom: 20px;">
+                        <source src="派派和爸爸吃饭的视频.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">🍽️ 派派和爸爸一起吃饭</p>
+                    
+                    <video width="100%" controls style="margin-bottom: 20px;">
+                        <source src="派派坐车的时候.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">🚗 派派坐车出去玩</p>
+                    
+                    <video width="100%" controls style="margin-bottom: 20px;">
+                        <source src="派派想点餐的视频.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">🍜 派派想点餐啦</p>
+                    
+                    <video width="100%" controls>
+                        <source src="派派睡觉的时候的视频.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <p style="margin-top: 10px; color: var(--text-secondary); font-size: 14px;">😴 派派睡觉时间</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="milestones">
+        <div class="container">
+            <h2 class="section-title">🏆 成长里程碑</h2>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 30%;"></div>
+            </div>
+            <div class="progress-text">已完成 3/10 项成长目标</div>
+
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon milestone">✅</div>
+                        <div class="card-title-text">已达标里程碑</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会抬头</div>
+                            <div class="milestone-desc">3个月时学会抬头，5个月时抬头很稳</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会翻身</div>
+                            <div class="milestone-desc">4个月时会从仰卧翻到俯卧</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会坐稳</div>
+                            <div class="milestone-desc">6个月时能够独坐一会儿</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 25px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon milestone">🚀</div>
+                        <div class="card-title-text">进行中目标</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🚶</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">学会走路 ⭐重要</div>
+                            <div class="milestone-desc">派派正在练习扶站和扶走，距离独立走路越来越近了！</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🗣️</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会叫爸爸妈妈</div>
+                            <div class="milestone-desc">正在学习叫"爸爸"和"妈妈"</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🐣</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会爬行</div>
+                            <div class="milestone-desc">正在练习用手膝爬行</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🦷</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">长牙了</div>
+                            <div class="milestone-desc">准备萌出第一颗小牙</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🥄</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">自主进食</div>
+                            <div class="milestone-desc">正在学习用勺子自己吃饭，虽然弄得满脸都是</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">💬 成长语录</h2>
+            <div class="quote-carousel">
+                <div class="quote-content" id="quoteContent">
+                    "今天派派第一次叫妈妈了，声音奶声奶气的，太可爱了！"
+                </div>
+                <div class="quote-author" id="quoteAuthor">
+                    —— 派派成长记录
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="prevQuote()">←</button>
+                    <button class="carousel-btn" onclick="nextQuote()">→</button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <button class="back-to-top" onclick="backToTop()" id="backToTop">↑</button>
+
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <div class="modal-content">
+            <img src="" alt="预览图片" class="modal-img" id="modalImg">
+            <div class="modal-controls">
+                <button class="modal-btn" onclick="prevModalImage(event)">←</button>
+                <button class="modal-btn" onclick="nextModalImage(event)">→</button>
+            </div>
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-counter" id="modalCounter">1 / 12</div>
+        </div>
+    </div>
+
+    <script>
+        const quotes = [
+            { content: "今天派派第一次叫妈妈了，声音奶声奶气的，太可爱了！", author: "—— 派派成长记录" },
+            { content: "派派会自己扶着沙发站起来了，虽然摇摇晃晃的，但特别勇敢。", author: "—— 派派成长记录" },
+            { content: "派派喜欢听儿歌，每次听到《小星星》都会开心地拍手。", author: "—— 派派成长记录" },
+            { content: "派派第一次自己用勺子吃饭，虽然弄得满脸都是，但特别有成就感。", author: "—— 派派成长记录" },
+            { content: "今天派派学会翻身了，从仰卧翻到俯卧，超厉害！", author: "—— 派派成长记录" },
+            { content: "派派看到镜子里的自己会笑了，觉得特别有趣！", author: "—— 派派成长记录" }
+        ];
+
+        const galleryImages = [
+            { src: '派派.jpg', desc: '派派的可爱模样' },
+            { src: '派派吃饭的时候.jpg', desc: '派派吃饭的样子' },
+            { src: '派派和妈妈玩耍的时候.jpg', desc: '和妈妈玩耍' },
+            { src: '派派求知的眼神.jpg', desc: '好奇的小眼神' },
+            { src: '派派玩玩具的时候.jpg', desc: '玩玩具时间' },
+            { src: '派派的两副面孔.jpg', desc: '可爱的表情' },
+            { src: '派派洗澡的视频.mp4', desc: '洗澡时间', isVideo: true },
+            { src: '派派的钢琴家时期.mp4', desc: '小钢琴家', isVideo: true },
+            { src: '派派和爸爸吃饭的视频.mp4', desc: '和爸爸一起吃饭', isVideo: true },
+            { src: '派派坐车的时候.mp4', desc: '坐车出去玩', isVideo: true },
+            { src: '派派想点餐的视频.mp4', desc: '想点餐啦', isVideo: true },
+            { src: '派派睡觉的时候的视频.mp4', desc: '睡觉时间', isVideo: true }
+        ];
+
+        let currentQuoteIndex = 0;
+        let currentImageIndex = 0;
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-toggle');
+            if (body.hasAttribute('data-theme')) {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadThemePreference() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.querySelector('.theme-toggle');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        }
+
+        function toggleCard(button) {
+            const content = button.parentElement.parentElement.querySelector('.card-content');
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                button.textContent = '▲';
+                button.classList.add('bounce');
+                setTimeout(() => button.classList.remove('bounce'), 500);
+            } else {
+                content.classList.add('collapsed');
+                button.textContent = '▼';
+            }
+        }
+
+        function previewImage(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = src;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function previewGalleryImage(index) {
+            currentImageIndex = index;
+            const modal = document.getElementById('imageModal');
+            const modalContent = modal.querySelector('.modal-content');
+            const item = galleryImages[index];
+            
+            if (item.isVideo) {
+                modalContent.innerHTML = `
+                    <video src="${item.src}" controls autoplay style="max-width: 90vw; max-height: 80vh; border-radius: 12px;"></video>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                    <div class="modal-counter">${index + 1} / ${galleryImages.length}</div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <img src="${item.src}" alt="预览图片" class="modal-img" id="modalImg">
+                    <div class="modal-controls">
+                        <button class="modal-btn" onclick="prevModalImage(event)">←</button>
+                        <button class="modal-btn" onclick="nextModalImage(event)">→</button>
+                    </div>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                    <div class="modal-counter">${index + 1} / ${galleryImages.length}</div>
+                `;
+            }
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function prevModalImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            document.getElementById('modalImg').src = galleryImages[currentImageIndex].src;
+            document.getElementById('modalCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function nextModalImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            document.getElementById('modalImg').src = galleryImages[currentImageIndex].src;
+            document.getElementById('modalCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function prevQuote() {
+            currentQuoteIndex = (currentQuoteIndex - 1 + quotes.length) % quotes.length;
+            updateQuote();
+        }
+
+        function nextQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            updateQuote();
+        }
+
+        function updateQuote() {
+            const quoteContent = document.getElementById('quoteContent');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            quoteContent.style.opacity = '0';
+            quoteAuthor.style.opacity = '0';
+            setTimeout(() => {
+                quoteContent.textContent = quotes[currentQuoteIndex].content;
+                quoteAuthor.textContent = quotes[currentQuoteIndex].author;
+                quoteContent.style.opacity = '1';
+                quoteAuthor.style.opacity = '1';
+            }, 300);
+            updateDots();
+        }
+
+        function updateDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = quotes.map((_, i) =>
+                `<span class="carousel-dot ${i === currentQuoteIndex ? 'active' : ''}" onclick="goToQuote(${i})"></span>`
+            ).join('');
+        }
+
+        function goToQuote(index) {
+            currentQuoteIndex = index;
+            updateQuote();
+        }
+
+        function backToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleScroll() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+
+        function autoQuoteCarousel() {
+            setInterval(() => {
+                nextQuote();
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadThemePreference();
+            updateDots();
+            autoQuoteCarousel();
+        });
+
+        window.addEventListener('scroll', handleScroll);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (document.getElementById('imageModal').classList.contains('show')) {
+                if (e.key === 'ArrowLeft') prevModalImage({ stopPropagation: () => {} });
+                if (e.key === 'ArrowRight') nextModalImage({ stopPropagation: () => {} });
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const modal = document.getElementById('imageModal');
+            if (modal.classList.contains('show')) {
+                if (touchEndX < touchStartX - 50) nextModalImage({ stopPropagation: () => {} });
+                if (touchEndX > touchStartX + 50) prevModalImage({ stopPropagation: () => {} });
+            }
+        });
+    </script>
+</body>
+</html>
