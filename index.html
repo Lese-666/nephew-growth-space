@@ -1,0 +1,3365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎来到派派的成长空间</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #6C757D;
+            --accent-color: #FF6B9D;
+            --accent-hover: #FF5287;
+            --accent-secondary: #7C4DFF;
+            --border-color: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --highlight-color: rgba(255, 107, 157, 0.1);
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-pink: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%);
+            --gradient-purple: linear-gradient(135deg, #7C4DFF 0%, #B388FF 100%);
+            --gradient-blue: linear-gradient(135deg, #4A90E2 0%, #67B3FF 100%);
+            --gradient-green: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --like-color: #E91E63;
+            --comment-color: #2196F3;
+            --share-color: #4CAF50;
+        }
+
+        [data-theme="dark"] {
+            --glass-bg: rgba(30, 30, 50, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1A2E;
+            --card-bg: #16213E;
+            --text-primary: #E8E8E8;
+            --text-secondary: #B0B0B0;
+            --accent-color: #FF6B9D;
+            --accent-hover: #FF5287;
+            --accent-secondary: #B388FF;
+            --border-color: #2A2A3E;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.4);
+            --highlight-color: rgba(255, 107, 157, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+            opacity: 0;
+            animation: pageFadeIn 1.2s ease-out forwards;
+            padding-bottom: 80px;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; filter: blur(10px); }
+            to { opacity: 1; filter: blur(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--gradient-pink);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--card-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .hero {
+            padding: 40px 0 60px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(124, 77, 255, 0.05) 100%);
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-main {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .hero-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hero-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-name span:first-child {
+            background: var(--gradient-pink);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-nickname {
+            font-size: 20px;
+            padding: 4px 16px;
+            background: var(--highlight-color);
+            border-radius: 20px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .hero-birthday {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .hero-age-display {
+            font-size: 18px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* 快速统计卡片 */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quick-stat-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .quick-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow-hover);
+        }
+
+        .quick-stat-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .quick-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .quick-stat-value span {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .quick-stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero-name {
+                font-size: 28px;
+                justify-content: center;
+            }
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .quick-stat-card {
+                padding: 20px 10px;
+            }
+            .quick-stat-value {
+                font-size: 24px;
+            }
+        }
+
+        .hero-avatar::after {
+            content: '👆点击放大';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .hero-avatar:hover::after {
+            opacity: 1;
+        }
+
+        .hero-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .hero-name span {
+            background: var(--gradient-pink);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-age {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .section {
+            padding: 50px 0;
+            animation: slideUp 0.8s ease-out both;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.3s; }
+        .section:nth-child(3) { animation-delay: 0.5s; }
+        .section:nth-child(4) { animation-delay: 0.7s; }
+        .section:nth-child(5) { animation-delay: 0.9s; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-pink);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px var(--shadow-hover);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .card-icon.eating { background: var(--gradient-pink); }
+        .card-icon.sleeping { background: var(--gradient-purple); }
+        .card-icon.playing { background: var(--gradient-blue); }
+        .card-icon.milestone { background: var(--gradient-green); }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title-text {
+            flex: 1;
+        }
+
+        .card-toggle {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px;
+        }
+
+        .card-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .card-content.collapsed {
+            max-height: 150px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-content.collapsed::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(transparent, var(--card-bg));
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .video-item {
+            background: var(--bg-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border-color);
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+            border-color: var(--accent-color);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: var(--bg-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .video-item:hover .video-play-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .video-play-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--accent-color);
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .video-item:hover .video-play-btn {
+            transform: scale(1.15);
+            background: white;
+        }
+
+        .video-title {
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .video-play-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            transform: scale(1.08);
+            background: var(--accent-hover);
+        }
+
+        .milestone-list {
+            margin-top: 20px;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .milestone-item:hover {
+            background: var(--highlight-color);
+        }
+
+        .milestone-item.completed {
+            border-left-color: var(--success-color);
+        }
+
+        .milestone-item.in-progress {
+            border-left-color: var(--warning-color);
+        }
+
+        .milestone-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .milestone-item.completed .milestone-icon {
+            background: var(--success-color);
+        }
+
+        .milestone-item.in-progress .milestone-icon {
+            background: var(--warning-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .milestone-info {
+            flex: 1;
+        }
+
+        .milestone-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .milestone-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .milestone-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .milestone-item.completed .milestone-status {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .milestone-item.in-progress .milestone-status {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-green);
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .quote-carousel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+        }
+
+        .quote-content {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            transition: var(--transition);
+            min-height: 60px;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--accent-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            font-size: 20px;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent-hover);
+            transform: translateY(-5px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            transform: scale(0.8);
+            transition: var(--transition);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .modal-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: var(--transition);
+            pointer-events: auto;
+        }
+
+        .modal-btn:hover {
+            background: white;
+            color: var(--accent-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: white;
+            color: var(--accent-color);
+        }
+
+        .modal-counter {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        ::selection {
+            background: var(--highlight-color);
+            color: var(--text-primary);
+        }
+
+        .add-record-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--accent-color);
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .add-record-btn:hover {
+            border-color: var(--accent-color);
+            background: var(--highlight-color);
+        }
+
+        /* 添加记录模态框样式 */
+        .form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 20px;
+        }
+
+        .form-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .form-modal.show .form-container {
+            transform: scale(1);
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-file-input {
+            display: none;
+        }
+
+        .form-file-label {
+            display: block;
+            padding: 12px 16px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .form-file-label:hover {
+            border-color: var(--accent-color);
+            background: var(--highlight-color);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .form-btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .form-btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .form-btn-secondary {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .form-btn-secondary:hover {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .form-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .form-close:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .admin-login {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+            transition: var(--transition);
+            font-size: 20px;
+            z-index: 100;
+        }
+
+        .admin-login:hover {
+            transform: scale(1.1);
+            background: var(--accent-hover);
+        }
+
+        /* 照片墙样式 */
+        .photo-wall-section {
+            padding: 40px 0;
+        }
+
+        .photo-wall {
+            column-count: 3;
+            column-gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .photo-wall {
+                column-count: 2;
+                column-gap: 10px;
+            }
+        }
+
+        .photo-wall-item {
+            break-inside: avoid;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .photo-wall-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-hover);
+        }
+
+        .photo-wall-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .photo-wall-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-wall-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 20px 15px 15px;
+            color: white;
+            font-size: 13px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .photo-wall-item:hover .photo-wall-overlay {
+            opacity: 1;
+        }
+
+        /* 统计图表样式 */
+        .stats-section {
+            padding: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow-hover);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.age { background: var(--gradient-pink); }
+        .stat-icon.height { background: var(--gradient-blue); }
+        .stat-icon.weight { background: var(--gradient-green); }
+        .stat-icon.milestone { background: var(--gradient-purple); }
+
+        .stat-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 4px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            margin-top: 20px;
+        }
+
+        /* 互动按钮样式 */
+        .interaction-bar {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+
+        .interaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .interaction-btn:hover {
+            background: var(--highlight-color);
+        }
+
+        .interaction-btn.liked {
+            color: var(--like-color);
+        }
+
+        .interaction-btn.liked .heart-icon {
+            animation: heartBeat 0.3s ease;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* 评论区样式 */
+        .comments-section {
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .comment-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .comment-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .comment-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .comment-submit {
+            padding: 12px 24px;
+            background: var(--gradient-pink);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .comment-submit:hover {
+            transform: scale(1.05);
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 10px 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            backdrop-filter: blur(10px);
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--accent-color);
+        }
+
+        .bottom-nav-item i {
+            font-size: 22px;
+        }
+
+        /* 玻璃拟态效果 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        /* 加载动画 */
+        .skeleton {
+            background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-color) 50%, var(--border-color) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 分享模态框 */
+        .share-modal-content {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .share-preview {
+            background: var(--gradient-pink);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .share-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .share-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .share-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* 提醒样式 */
+        .reminder-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: #FF5252;
+            color: white;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 用户选择器 */
+        .user-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .user-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .user-option:hover,
+        .user-option.active {
+            border-color: var(--accent-color);
+            background: var(--highlight-color);
+        }
+
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* 导出按钮 */
+        .export-btn {
+            position: fixed;
+            bottom: 160px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.4);
+            transition: var(--transition);
+            font-size: 20px;
+            z-index: 100;
+        }
+
+        .export-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* 搜索框 */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--highlight-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* 筛选标签 */
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-tag {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+        }
+
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--success-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .form-title {
+                font-size: 20px;
+            }
+        }
+            background: transparent;
+            color: var(--accent-color);
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .add-record-btn:hover {
+            border-color: var(--accent-color);
+            background: var(--highlight-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 3px solid var(--card-bg);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .timeline-text {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 40px 0; }
+            .hero-avatar { width: 120px; height: 120px; }
+            .hero-name { font-size: 28px; }
+            .hero-stats { gap: 15px; }
+            .stat-item { padding: 12px 18px; }
+            .stat-value { font-size: 24px; }
+            .section { padding: 35px 0; }
+            .section-title { font-size: 22px; }
+            .card { padding: 20px; }
+            .photo-gallery { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+            .quote-carousel { padding: 30px 20px; }
+            .back-to-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+            .nav-buttons { display: none; }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">🌸 欢迎来到派派的成长空间</div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="scrollToSection('home')">首页</button>
+                <button class="nav-btn" onclick="scrollToSection('eating')">饮食</button>
+                <button class="nav-btn" onclick="scrollToSection('sleeping')">睡眠</button>
+                <button class="nav-btn" onclick="scrollToSection('playing')">玩耍</button>
+                <button class="nav-btn" onclick="scrollToSection('milestones')">成长</button>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+        </div>
+    </header>
+
+    <!-- 首屏：欢迎 + 基本信息 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-main">
+                <div class="hero-info">
+                    <img src="派派.jpg" alt="派派照片" class="hero-avatar" onclick="previewImage(this.src)">
+                    <div class="hero-text">
+                        <h1 class="hero-name"><span>黄屿禾</span> <span class="hero-nickname">派派</span></h1>
+                        <p class="hero-birthday">🎂 2025年7月21日</p>
+                        <p class="hero-age-display" id="heroAgeDisplay">计算中...</p>
+                    </div>
+                </div>
+                
+                <!-- 快速统计卡片 -->
+                <div class="quick-stats">
+                    <div class="quick-stat-card">
+                        <div class="quick-stat-icon">📏</div>
+                        <div class="quick-stat-value">70<span>cm</span></div>
+                        <div class="quick-stat-label">身高</div>
+                    </div>
+                    <div class="quick-stat-card">
+                        <div class="quick-stat-icon">⚖️</div>
+                        <div class="quick-stat-value">8.5<span>kg</span></div>
+                        <div class="quick-stat-label">体重</div>
+                    </div>
+                    <div class="quick-stat-card">
+                        <div class="quick-stat-icon">🎯</div>
+                        <div class="quick-stat-value">6<span>/11</span></div>
+                        <div class="quick-stat-label">里程碑</div>
+                    </div>
+                    <div class="quick-stat-card">
+                        <div class="quick-stat-icon">📸</div>
+                        <div class="quick-stat-value">128<span>张</span></div>
+                        <div class="quick-stat-label">照片</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="eating">
+        <div class="container">
+            <h2 class="section-title">🍽️ 饮食记录</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon eating">🍼</div>
+                        <div class="card-title-text">派派的美食时光</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派现在主要以配方奶和辅食为主。每天喝4-5次奶，最爱喝苹果汁！辅食方面喜欢各种泥糊状食物。最搞笑的是派派吃东西的时候会发出"好吃好吃"的声音，虽然还不会说话，但是表情超可爱！</p>
+                    <div class="tags">
+                        <span class="tag">配方奶</span>
+                        <span class="tag">辅食</span>
+                        <span class="tag">最爱苹果汁</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon eating">📸</div>
+                        <div class="card-title-text">饮食照片集</div>
+                    </div>
+                </div>
+                <div class="photo-gallery">
+                    <div class="photo-item" onclick="previewGalleryImage(1)">
+                        <img src="派派吃饭的时候.jpg" alt="派派吃饭">
+                        <div class="photo-overlay">�️ 派派吃饭的样子</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(0)">
+                        <img src="派派.jpg" alt="派派">
+                        <div class="photo-overlay">😊 派派的可爱模样</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="sleeping">
+        <div class="container">
+            <h2 class="section-title">😴 睡眠记录</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon sleeping">🌙</div>
+                        <div class="card-title-text">派派的睡眠习惯</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派现在每天睡两个小时左右。晚上一般9点左右才睡，睡觉的时候喜欢抱着小玩具，特别可爱！</p>
+                    <div class="tags">
+                        <span class="tag">晚上9点睡</span>
+                        <span class="tag">小玩具</span>
+                        <span class="tag">每天睡2小时</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon sleeping">📸</div>
+                        <div class="card-title-text">睡眠照片集</div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                    <div style="font-size: 48px; margin-bottom: 16px;">�</div>
+                    <div>还没有睡眠照片，敬请期待！</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="playing">
+        <div class="container">
+            <h2 class="section-title">🎮 玩耍时光</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">🧸</div>
+                        <div class="card-title-text">派派的最爱游戏</div>
+                    </div>
+                    <button class="card-toggle" onclick="toggleCard(this)">▼</button>
+                </div>
+                <div class="card-content">
+                    <p>派派最喜欢的事情就是玩！喜欢玩各种玩具，一摇就会笑。他喜欢掀毛巾、玩这些摇，所有的玩具都喜欢摇。他喜欢吃玩具，但是还不会听歌，因为他还很小。</p>
+                    <div class="tags">
+                        <span class="tag">玩玩具</span>
+                        <span class="tag">喜欢摇</span>
+                        <span class="tag">掀毛巾</span>
+                        <span class="tag">吃玩具</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">📸</div>
+                        <div class="card-title-text">玩耍照片集</div>
+                    </div>
+                </div>
+                <div class="photo-gallery">
+                    <div class="photo-item" onclick="previewGalleryImage(4)">
+                        <img src="派派玩玩具的时候.jpg" alt="派派玩玩具">
+                        <div class="photo-overlay">🧸 玩玩具时间</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(2)">
+                        <img src="派派和妈妈玩耍的时候.jpg" alt="和妈妈玩耍">
+                        <div class="photo-overlay">👩‍👦 和妈妈玩耍</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(3)">
+                        <img src="派派求知的眼神.jpg" alt="好奇的眼神">
+                        <div class="photo-overlay">🤔 好奇的小眼神</div>
+                    </div>
+                    <div class="photo-item" onclick="previewGalleryImage(5)">
+                        <img src="派派的两副面孔.jpg" alt="可爱表情">
+                        <div class="photo-overlay">� 可爱的表情</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">📝</div>
+                        <div class="card-title-text">成长小日记</div>
+                    </div>
+                </div>
+                <div class="timeline" id="growthTimeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">时间待定</div>
+                        <div class="timeline-text">去公园玩，看到小狗特别激动！</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月28日</div>
+                        <div class="timeline-text">派派学会翻身了！从仰卧到俯卧，特别开心！</div>
+                    </div>
+                </div>
+                <button class="add-record-btn" onclick="showAddRecordForm()">
+                    ✨ 添加新的成长记录
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon playing">🎬</div>
+                        <div class="card-title-text">派派的精彩视频</div>
+                    </div>
+                </div>
+                <div class="video-grid">
+                    <div class="video-item" onclick="playVideo('派派洗澡的视频.mp4', '🛁 派派洗澡时间')">
+                        <div class="video-thumbnail">
+                            <img src="派派洗澡的视频_封面.jpg" alt="派派洗澡" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">🛁 派派洗澡时间</div>
+                    </div>
+                    
+                    <div class="video-item" onclick="playVideo('派派的钢琴家时期.mp4', '🎹 派派的钢琴家时期')">
+                        <div class="video-thumbnail">
+                            <img src="派派的钢琴家时期_封面.jpg" alt="派派钢琴家" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">🎹 派派的钢琴家时期</div>
+                    </div>
+                    
+                    <div class="video-item" onclick="playVideo('派派和爸爸吃饭的视频.mp4', '🍽️ 派派和爸爸一起吃饭')">
+                        <div class="video-thumbnail">
+                            <img src="派派和爸爸吃饭的视频_封面.jpg" alt="派派和爸爸吃饭" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">🍽️ 派派和爸爸一起吃饭</div>
+                    </div>
+                    
+                    <div class="video-item" onclick="playVideo('派派坐车的时候.mp4', '🚗 派派坐车出去玩')">
+                        <div class="video-thumbnail">
+                            <img src="派派坐车的时候_封面.jpg" alt="派派坐车" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">🚗 派派坐车出去玩</div>
+                    </div>
+                    
+                    <div class="video-item" onclick="playVideo('派派想点餐的视频.mp4', '🍜 派派想点餐啦')">
+                        <div class="video-thumbnail">
+                            <img src="派派想点餐的视频_封面.jpg" alt="派派想点餐" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">🍜 派派想点餐啦</div>
+                    </div>
+                    
+                    <div class="video-item" onclick="playVideo('派派睡觉的时候的视频.mp4', '😴 派派睡觉时间')">
+                        <div class="video-thumbnail">
+                            <img src="派派睡觉的时候的视频_封面.jpg" alt="派派睡觉" class="video-cover">
+                            <div class="video-play-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                        <div class="video-title">😴 派派睡觉时间</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="milestones">
+        <div class="container">
+            <h2 class="section-title">🏆 成长里程碑</h2>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 30%;"></div>
+            </div>
+            <div class="progress-text">已完成 3/10 项成长目标</div>
+
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon milestone">✅</div>
+                        <div class="card-title-text">已达标里程碑</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会抬头</div>
+                            <div class="milestone-desc">3个月时学会抬头，5个月时抬头很稳</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会翻身</div>
+                            <div class="milestone-desc">4个月时会从仰卧翻到俯卧</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                    <div class="milestone-item completed">
+                        <div class="milestone-icon">🎉</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会坐稳</div>
+                            <div class="milestone-desc">6个月时能够独坐一会儿</div>
+                        </div>
+                        <span class="milestone-status">已达标</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 25px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon milestone">🚀</div>
+                        <div class="card-title-text">进行中目标</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🚶</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">学会走路 ⭐重要</div>
+                            <div class="milestone-desc">派派正在练习扶站和扶走，距离独立走路越来越近了！</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🗣️</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会叫爸爸妈妈</div>
+                            <div class="milestone-desc">正在学习叫"爸爸"和"妈妈"</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🐣</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">会爬行</div>
+                            <div class="milestone-desc">正在练习用手膝爬行</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🦷</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">长牙了</div>
+                            <div class="milestone-desc">准备萌出第一颗小牙</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                    <div class="milestone-item in-progress">
+                        <div class="milestone-icon">🥄</div>
+                        <div class="milestone-info">
+                            <div class="milestone-title">自主进食</div>
+                            <div class="milestone-desc">正在学习用勺子自己吃饭，虽然弄得满脸都是</div>
+                        </div>
+                        <span class="milestone-status">进行中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">💬 成长语录</h2>
+            <div class="quote-carousel">
+                <div class="quote-content" id="quoteContent">
+                    "今天派派第一次叫妈妈了，声音奶声奶气的，太可爱了！"
+                </div>
+                <div class="quote-author" id="quoteAuthor">
+                    —— 派派成长记录
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="prevQuote()">←</button>
+                    <button class="carousel-btn" onclick="nextQuote()">→</button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片墙部分 -->
+    <section class="section photo-wall-section" id="photowall">
+        <div class="container">
+            <h2 class="section-title">📸 派派的照片墙</h2>
+            <div class="photo-wall" id="photoWall">
+                <!-- 照片墙项目将通过 JavaScript 动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 成长统计部分 -->
+    <section class="section stats-section" id="stats">
+        <div class="container">
+            <h2 class="section-title">📊 成长数据统计</h2>
+            
+            <!-- 统计卡片 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon age">👶</div>
+                        <div>
+                            <div class="stat-title">当前年龄</div>
+                            <div class="stat-value" id="ageDisplay">计算中...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon height">📏</div>
+                        <div>
+                            <div class="stat-title">身高记录</div>
+                            <div class="stat-value">70 cm</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="heightChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon weight">⚖️</div>
+                        <div>
+                            <div class="stat-title">体重记录</div>
+                            <div class="stat-value">8.5 kg</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weightChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon milestone">🎯</div>
+                        <div>
+                            <div class="stat-title">里程碑进度</div>
+                            <div class="stat-value">3 / 8</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="milestoneChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 互动时间轴部分 -->
+    <section class="section" id="timeline">
+        <div class="container">
+            <h2 class="section-title">📝 成长时间轴</h2>
+            
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="timelineSearch" placeholder="搜索成长记录..." onkeyup="searchTimeline()">
+            </div>
+            
+            <!-- 筛选标签 -->
+            <div class="filter-tags">
+                <span class="filter-tag active" onclick="filterTimeline('all')">全部</span>
+                <span class="filter-tag" onclick="filterTimeline('growth')">成长记录</span>
+                <span class="filter-tag" onclick="filterTimeline('milestone')">里程碑</span>
+                <span class="filter-tag" onclick="filterTimeline('photo')">照片</span>
+                <span class="filter-tag" onclick="filterTimeline('video')">视频</span>
+            </div>
+            
+            <!-- 时间轴内容 -->
+            <div class="timeline" id="interactiveTimeline">
+                <!-- 动态生成 -->
+            </div>
+            
+            <button class="add-record-btn" onclick="showAddRecordForm()">
+                ✨ 添加新的成长记录
+            </button>
+        </div>
+    </section>
+
+    <button class="back-to-top" onclick="backToTop()" id="backToTop">↑</button>
+    
+    <!-- 导出按钮 -->
+    <button class="export-btn" onclick="showExportOptions()" title="导出数据">📥</button>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-item active" onclick="scrollToSection('hero')">
+            <span>🏠</span>
+            <span>首页</span>
+        </div>
+        <div class="bottom-nav-item" onclick="scrollToSection('photowall')">
+            <span>📸</span>
+            <span>照片</span>
+        </div>
+        <div class="bottom-nav-item" onclick="scrollToSection('stats')">
+            <span>📊</span>
+            <span>统计</span>
+        </div>
+        <div class="bottom-nav-item" onclick="scrollToSection('timeline')">
+            <span>📝</span>
+            <span>记录</span>
+        </div>
+        <div class="bottom-nav-item" onclick="showUserSelector()">
+            <span>👤</span>
+            <span>我的</span>
+        </div>
+    </nav>
+
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <div class="modal-content">
+            <img src="" alt="预览图片" class="modal-img" id="modalImg">
+            <div class="modal-controls">
+                <button class="modal-btn" onclick="prevModalImage(event)">←</button>
+                <button class="modal-btn" onclick="nextModalImage(event)">→</button>
+            </div>
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-counter" id="modalCounter">1 / 12</div>
+        </div>
+    </div>
+
+    <script>
+        const quotes = [
+            { content: "今天派派第一次叫妈妈了，声音奶声奶气的，太可爱了！", author: "—— 派派成长记录" },
+            { content: "派派会自己扶着沙发站起来了，虽然摇摇晃晃的，但特别勇敢。", author: "—— 派派成长记录" },
+            { content: "派派喜欢听儿歌，每次听到《小星星》都会开心地拍手。", author: "—— 派派成长记录" },
+            { content: "派派第一次自己用勺子吃饭，虽然弄得满脸都是，但特别有成就感。", author: "—— 派派成长记录" },
+            { content: "今天派派学会翻身了，从仰卧翻到俯卧，超厉害！", author: "—— 派派成长记录" },
+            { content: "派派看到镜子里的自己会笑了，觉得特别有趣！", author: "—— 派派成长记录" }
+        ];
+
+        const galleryImages = [
+            { src: '派派.jpg', desc: '派派的可爱模样' },
+            { src: '派派吃饭的时候.jpg', desc: '派派吃饭的样子' },
+            { src: '派派和妈妈玩耍的时候.jpg', desc: '和妈妈玩耍' },
+            { src: '派派求知的眼神.jpg', desc: '好奇的小眼神' },
+            { src: '派派玩玩具的时候.jpg', desc: '玩玩具时间' },
+            { src: '派派的两副面孔.jpg', desc: '可爱的表情' }
+        ];
+
+        // 照片墙数据
+        const photoWallImages = [
+            { src: '派派.jpg', desc: '派派的可爱模样', date: '2026-04-01' },
+            { src: '派派吃饭的时候.jpg', desc: '派派吃饭的样子', date: '2026-04-05' },
+            { src: '派派和妈妈玩耍的时候.jpg', desc: '和妈妈玩耍', date: '2026-04-10' },
+            { src: '派派求知的眼神.jpg', desc: '好奇的小眼神', date: '2026-04-12' },
+            { src: '派派玩玩具的时候.jpg', desc: '玩玩具时间', date: '2026-04-15' },
+            { src: '派派的两副面孔.jpg', desc: '可爱的表情', date: '2026-04-18' }
+        ];
+
+        // 成长数据
+        const growthData = {
+            height: [
+                { date: '2025-07', value: 50 },
+                { date: '2025-10', value: 58 },
+                { date: '2026-01', value: 65 },
+                { date: '2026-04', value: 70 }
+            ],
+            weight: [
+                { date: '2025-07', value: 3.2 },
+                { date: '2025-10', value: 5.5 },
+                { date: '2026-01', value: 7.2 },
+                { date: '2026-04', value: 8.5 }
+            ]
+        };
+
+        // 当前用户
+        let currentUser = localStorage.getItem('paipai_current_user') || '爸爸';
+        
+        // 点赞数据
+        let likes = JSON.parse(localStorage.getItem('paipai_likes') || '{}');
+        
+        // 评论数据
+        let comments = JSON.parse(localStorage.getItem('paipai_comments') || '[]');
+
+        let currentQuoteIndex = 0;
+        let currentImageIndex = 0;
+
+        // ==================== 照片墙功能 ====================
+        function initPhotoWall() {
+            const photoWall = document.getElementById('photoWall');
+            if (!photoWall) return;
+            
+            photoWall.innerHTML = photoWallImages.map((photo, index) => `
+                <div class="photo-wall-item" onclick="openPhotoModal(${index})">
+                    <img src="${photo.src}" alt="${photo.desc}" loading="lazy">
+                    <div class="photo-wall-overlay">
+                        <div>${photo.desc}</div>
+                        <div style="font-size: 11px; opacity: 0.8; margin-top: 5px;">${photo.date}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openPhotoModal(index) {
+            currentImageIndex = index;
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const counter = document.getElementById('modalCounter');
+            
+            modalImg.src = photoWallImages[index].src;
+            counter.textContent = `${index + 1} / ${photoWallImages.length}`;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ==================== 统计图表功能 ====================
+        function initCharts() {
+            // 年龄计算
+            calculateAge();
+            
+            // 身高图表
+            const heightCtx = document.getElementById('heightChart');
+            if (heightCtx) {
+                new Chart(heightCtx, {
+                    type: 'line',
+                    data: {
+                        labels: growthData.height.map(d => d.date),
+                        datasets: [{
+                            label: '身高 (cm)',
+                            data: growthData.height.map(d => d.value),
+                            borderColor: '#4A90E2',
+                            backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: false, min: 40 }
+                        }
+                    }
+                });
+            }
+            
+            // 体重图表
+            const weightCtx = document.getElementById('weightChart');
+            if (weightCtx) {
+                new Chart(weightCtx, {
+                    type: 'line',
+                    data: {
+                        labels: growthData.weight.map(d => d.date),
+                        datasets: [{
+                            label: '体重 (kg)',
+                            data: growthData.weight.map(d => d.value),
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: false, min: 2 }
+                        }
+                    }
+                });
+            }
+            
+            // 里程碑进度图表
+            const milestoneCtx = document.getElementById('milestoneChart');
+            if (milestoneCtx) {
+                new Chart(milestoneCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['已完成', '进行中'],
+                        datasets: [{
+                            data: [3, 5],
+                            backgroundColor: ['#4CAF50', '#E0E0E0'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        function calculateAge() {
+            const birthDate = new Date('2025-07-21');
+            const now = new Date();
+            const diffTime = Math.abs(now - birthDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const years = Math.floor(diffDays / 365);
+            const months = Math.floor((diffDays % 365) / 30);
+            const days = diffDays % 30;
+            
+            // 更新统计区域
+            const ageDisplay = document.getElementById('ageDisplay');
+            if (ageDisplay) {
+                ageDisplay.textContent = `${years}岁${months}个月${days}天`;
+            }
+            
+            // 更新首屏
+            const heroAgeDisplay = document.getElementById('heroAgeDisplay');
+            if (heroAgeDisplay) {
+                if (years > 0) {
+                    heroAgeDisplay.textContent = `🎉 今天我已经 ${years} 岁 ${months} 个月 ${days} 天 啦！`;
+                } else {
+                    heroAgeDisplay.textContent = `🎉 今天我已经 ${months} 个月 ${days} 天 啦！`;
+                }
+            }
+        }
+
+        // ==================== 互动功能 ====================
+        function toggleLike(element, recordId) {
+            const isLiked = element.classList.contains('liked');
+            const countSpan = element.querySelector('.like-count');
+            let count = parseInt(countSpan?.textContent || '0');
+            
+            if (isLiked) {
+                element.classList.remove('liked');
+                count--;
+                delete likes[recordId];
+            } else {
+                element.classList.add('liked');
+                count++;
+                likes[recordId] = true;
+                
+                // 心跳动画
+                const heart = element.querySelector('.heart-icon');
+                if (heart) {
+                    heart.style.animation = 'none';
+                    setTimeout(() => heart.style.animation = '', 10);
+                }
+            }
+            
+            if (countSpan) countSpan.textContent = count;
+            localStorage.setItem('paipai_likes', JSON.stringify(likes));
+        }
+
+        function addComment(recordId) {
+            const input = document.getElementById(`comment-input-${recordId}`);
+            const text = input?.value?.trim();
+            
+            if (!text) return;
+            
+            const comment = {
+                id: Date.now(),
+                recordId: recordId,
+                author: currentUser,
+                text: text,
+                time: new Date().toLocaleString('zh-CN')
+            };
+            
+            comments.push(comment);
+            localStorage.setItem('paipai_comments', JSON.stringify(comments));
+            
+            // 刷新评论显示
+            renderComments(recordId);
+            
+            if (input) input.value = '';
+            showToast('✅ 评论已添加');
+        }
+
+        function renderComments(recordId) {
+            const container = document.getElementById(`comments-${recordId}`);
+            if (!container) return;
+            
+            const recordComments = comments.filter(c => c.recordId === recordId);
+            
+            container.innerHTML = recordComments.map(comment => `
+                <div class="comment-item">
+                    <div class="comment-avatar">${getUserAvatar(comment.author)}</div>
+                    <div class="comment-content">
+                        <div class="comment-author">${comment.author}</div>
+                        <div class="comment-text">${comment.text}</div>
+                        <div class="comment-time">${comment.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getUserAvatar(user) {
+            const avatars = {
+                '爸爸': '👨',
+                '妈妈': '👩',
+                '爷爷': '👴',
+                '奶奶': '👵'
+            };
+            return avatars[user] || '👤';
+        }
+
+        // ==================== 搜索和筛选功能 ====================
+        function searchTimeline() {
+            const query = document.getElementById('timelineSearch')?.value?.toLowerCase();
+            const items = document.querySelectorAll('#interactiveTimeline .timeline-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function filterTimeline(type) {
+            // 更新标签样式
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 筛选逻辑
+            const items = document.querySelectorAll('#interactiveTimeline .timeline-item');
+            items.forEach(item => {
+                if (type === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    const itemType = item.dataset.type;
+                    item.style.display = itemType === type ? 'block' : 'none';
+                }
+            });
+        }
+
+        // ==================== 底部导航功能 ====================
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+                updateBottomNav(sectionId);
+            }
+        }
+
+        function updateBottomNav(activeId) {
+            document.querySelectorAll('.bottom-nav-item').forEach((item, index) => {
+                item.classList.remove('active');
+            });
+            
+            const navMap = {
+                'hero': 0,
+                'photowall': 1,
+                'stats': 2,
+                'timeline': 3
+            };
+            
+            const navIndex = navMap[activeId];
+            if (navIndex !== undefined) {
+                document.querySelectorAll('.bottom-nav-item')[navIndex]?.classList.add('active');
+            }
+        }
+
+        // ==================== 用户选择功能 ====================
+        function showUserSelector() {
+            document.getElementById('userModal').classList.add('show');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('show');
+        }
+
+        function selectUser(user) {
+            currentUser = user;
+            localStorage.setItem('paipai_current_user', user);
+            
+            document.getElementById('currentUser').textContent = user;
+            
+            // 更新选中样式
+            document.querySelectorAll('.user-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.textContent.includes(user)) {
+                    option.classList.add('active');
+                }
+            });
+            
+            showToast(`✅ 已切换为 ${user}`);
+        }
+
+        // ==================== 分享功能 ====================
+        function showShareModal() {
+            document.getElementById('shareModal').classList.add('show');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('show');
+        }
+
+        function shareToWeChat() {
+            showToast('📱 请使用微信扫一扫功能分享');
+        }
+
+        function shareToQQ() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('派派的成长空间');
+            window.open(`https://connect.qq.com/widget/shareqq/index.html?url=${url}&title=${title}`);
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('✅ 链接已复制到剪贴板');
+            });
+        }
+
+        // ==================== 导出功能 ====================
+        function showExportOptions() {
+            document.getElementById('exportModal').classList.add('show');
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.remove('show');
+        }
+
+        function exportToPDF() {
+            showToast('📄 正在生成 PDF...');
+            window.print();
+        }
+
+        function exportToJSON() {
+            const data = {
+                records: JSON.parse(localStorage.getItem('paipai_growth_records') || '[]'),
+                comments: comments,
+                likes: likes,
+                exportTime: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `派派成长记录_${new Date().toLocaleDateString()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('✅ 数据已导出');
+        }
+
+        function generateShareImage() {
+            showToast('🖼️ 分享卡片生成功能开发中...');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-toggle');
+            if (body.hasAttribute('data-theme')) {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadThemePreference() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.querySelector('.theme-toggle');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        }
+
+        function toggleCard(button) {
+            const content = button.parentElement.parentElement.querySelector('.card-content');
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                button.textContent = '▲';
+                button.classList.add('bounce');
+                setTimeout(() => button.classList.remove('bounce'), 500);
+            } else {
+                content.classList.add('collapsed');
+                button.textContent = '▼';
+            }
+        }
+
+        function previewImage(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = src;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function playVideo(videoSrc, videoTitle) {
+            const modal = document.getElementById('imageModal');
+            const modalContent = modal.querySelector('.modal-content');
+            
+            modalContent.innerHTML = `
+                <div style="position: relative; max-width: 90vw; max-height: 90vh;">
+                    <video src="${videoSrc}" controls autoplay style="max-width: 90vw; max-height: 80vh; border-radius: 12px; box-shadow: 0 10px 50px rgba(0,0,0,0.5);">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div style="text-align: center; margin-top: 15px; color: white; font-size: 16px;">${videoTitle}</div>
+                    <button class="modal-close" onclick="closeModal()" style="top: -50px; right: 0;">×</button>
+                </div>
+            `;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function previewGalleryImage(index) {
+            currentImageIndex = index;
+            const modal = document.getElementById('imageModal');
+            const modalContent = modal.querySelector('.modal-content');
+            const item = galleryImages[index];
+            
+            if (item.isVideo) {
+                modalContent.innerHTML = `
+                    <video src="${item.src}" controls autoplay style="max-width: 90vw; max-height: 80vh; border-radius: 12px;"></video>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                    <div class="modal-counter">${index + 1} / ${galleryImages.length}</div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <img src="${item.src}" alt="预览图片" class="modal-img" id="modalImg">
+                    <div class="modal-controls">
+                        <button class="modal-btn" onclick="prevModalImage(event)">←</button>
+                        <button class="modal-btn" onclick="nextModalImage(event)">→</button>
+                    </div>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                    <div class="modal-counter">${index + 1} / ${galleryImages.length}</div>
+                `;
+            }
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function prevModalImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            document.getElementById('modalImg').src = galleryImages[currentImageIndex].src;
+            document.getElementById('modalCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function nextModalImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            document.getElementById('modalImg').src = galleryImages[currentImageIndex].src;
+            document.getElementById('modalCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function prevQuote() {
+            currentQuoteIndex = (currentQuoteIndex - 1 + quotes.length) % quotes.length;
+            updateQuote();
+        }
+
+        function nextQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            updateQuote();
+        }
+
+        function updateQuote() {
+            const quoteContent = document.getElementById('quoteContent');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            quoteContent.style.opacity = '0';
+            quoteAuthor.style.opacity = '0';
+            setTimeout(() => {
+                quoteContent.textContent = quotes[currentQuoteIndex].content;
+                quoteAuthor.textContent = quotes[currentQuoteIndex].author;
+                quoteContent.style.opacity = '1';
+                quoteAuthor.style.opacity = '1';
+            }, 300);
+            updateDots();
+        }
+
+        function updateDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = quotes.map((_, i) =>
+                `<span class="carousel-dot ${i === currentQuoteIndex ? 'active' : ''}" onclick="goToQuote(${i})"></span>`
+            ).join('');
+        }
+
+        function goToQuote(index) {
+            currentQuoteIndex = index;
+            updateQuote();
+        }
+
+        function backToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 管理员功能
+        let isAdmin = false;
+        const ADMIN_PASSWORD = 'paipai2025'; // 管理员密码
+        
+        // GitHub API 配置
+        const GITHUB_TOKEN = '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';
+        const GITHUB_OWNER = 'lese-666';
+        const GITHUB_REPO = 'nephew-growth-space';
+        const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+
+        function showAdminLogin() {
+            document.getElementById('adminLoginModal').classList.add('show');
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').classList.remove('show');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function loginAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                closeAdminLogin();
+                showToast('✅ 登录成功！现在可以添加成长记录了');
+                showAddRecordForm();
+            } else {
+                showToast('❌ 密码错误，请重试', true);
+            }
+        }
+
+        // 添加记录表单功能
+        function showAddRecordForm() {
+            if (!isAdmin) {
+                showAdminLogin();
+                return;
+            }
+            
+            // 设置默认日期为今天
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('recordDate').value = today;
+            
+            document.getElementById('recordFormModal').classList.add('show');
+        }
+
+        function closeRecordForm() {
+            document.getElementById('recordFormModal').classList.remove('show');
+            // 清空表单
+            document.getElementById('recordContent').value = '';
+            document.getElementById('recordPhoto').value = '';
+            document.querySelector('.form-file-label').textContent = '📷 点击选择照片';
+        }
+
+        async function submitRecord() {
+            const date = document.getElementById('recordDate').value;
+            const type = document.getElementById('recordType').value;
+            const content = document.getElementById('recordContent').value;
+            const photoFile = document.getElementById('recordPhoto').files[0];
+
+            if (!date || !content) {
+                showToast('❌ 请填写日期和记录内容', true);
+                return;
+            }
+
+            showToast('📝 正在保存记录...');
+
+            try {
+                // 格式化日期
+                const formattedDate = new Date(date).toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // 准备 issue 数据
+                const issueData = {
+                    title: `【${type === 'growth' ? '成长记录' : type === 'milestone' ? '里程碑' : type === 'photo' ? '照片' : '视频'}】${formattedDate}`,
+                    body: `## 日期\n${formattedDate}\n\n## 记录内容\n${content}\n\n## 类型\n${type}`,
+                    labels: ['growth-record', type]
+                };
+
+                // 创建 GitHub Issue
+                const response = await fetch(`${GITHUB_API_BASE}/issues`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(issueData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('创建记录失败');
+                }
+
+                const issue = await response.json();
+
+                // 创建新的时间轴项目
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="timeline-date">${formattedDate}</div>
+                    <div class="timeline-text">${content}</div>
+                `;
+
+                // 添加到时间轴
+                const timeline = document.getElementById('growthTimeline');
+                timeline.insertBefore(timelineItem, timeline.firstChild);
+
+                closeRecordForm();
+                showToast('✅ 成长记录已保存到 GitHub！');
+            } catch (error) {
+                console.error('保存记录失败:', error);
+                showToast('❌ 保存失败，请检查网络连接', true);
+            }
+        }
+
+        // 从 GitHub Issues 加载记录
+        async function loadRecordsFromGitHub() {
+            try {
+                const response = await fetch(`${GITHUB_API_BASE}/issues?labels=growth-record&state=open`, {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('加载记录失败');
+                }
+
+                const issues = await response.json();
+                const timeline = document.getElementById('growthTimeline');
+                
+                // 清空现有记录（保留默认的）
+                timeline.innerHTML = '';
+                
+                issues.forEach(issue => {
+                    // 解析 issue body
+                    const lines = issue.body.split('\n');
+                    let date = '';
+                    let content = '';
+                    
+                    lines.forEach(line => {
+                        if (line.startsWith('## 日期')) {
+                            date = lines[lines.indexOf(line) + 1] || '';
+                        }
+                        if (line.startsWith('## 记录内容')) {
+                            content = lines[lines.indexOf(line) + 1] || '';
+                        }
+                    });
+
+                    if (date && content) {
+                        const timelineItem = document.createElement('div');
+                        timelineItem.className = 'timeline-item';
+                        timelineItem.innerHTML = `
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-text">${content}</div>
+                        `;
+                        timeline.appendChild(timelineItem);
+                    }
+                });
+
+                if (issues.length === 0) {
+                    // 如果没有记录，显示默认记录
+                    timeline.innerHTML = `
+                        <div class="timeline-item">
+                            <div class="timeline-date">时间待定</div>
+                            <div class="timeline-text">去公园玩，看到小狗特别激动！</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026年3月28日</div>
+                            <div class="timeline-text">派派学会翻身了！从仰卧到俯卧，特别开心！</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载记录失败:', error);
+                showToast('❌ 加载记录失败，使用本地记录', true);
+                // 如果加载失败，使用本地记录
+                loadRecordsFromLocal();
+            }
+        }
+
+        // 保存记录到本地存储（作为备份）
+        function saveRecordToLocal(record) {
+            let records = JSON.parse(localStorage.getItem('paipai_growth_records') || '[]');
+            records.unshift(record);
+            localStorage.setItem('paipai_growth_records', JSON.stringify(records));
+        }
+
+        // 加载本地存储的记录（备份）
+        function loadRecordsFromLocal() {
+            const records = JSON.parse(localStorage.getItem('paipai_growth_records') || '[]');
+            const timeline = document.getElementById('growthTimeline');
+            
+            records.forEach(record => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="timeline-date">${record.date}</div>
+                    <div class="timeline-text">${record.content}</div>
+                `;
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        // 显示提示消息
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 文件选择显示
+        document.getElementById('recordPhoto')?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.querySelector('.form-file-label').textContent = `📷 已选择: ${file.name}`;
+            }
+        });
+
+        // 页面加载时初始化所有功能
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecordsFromGitHub();
+            initPhotoWall();
+            initCharts();
+            
+            // 初始化用户显示
+            document.getElementById('currentUser').textContent = currentUser;
+            
+            // 更新用户选择器状态
+            document.querySelectorAll('.user-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.textContent.includes(currentUser)) {
+                    option.classList.add('active');
+                }
+            });
+        });
+
+        function handleScroll() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+
+        function autoQuoteCarousel() {
+            setInterval(() => {
+                nextQuote();
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadThemePreference();
+            updateDots();
+            autoQuoteCarousel();
+        });
+
+        window.addEventListener('scroll', handleScroll);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (document.getElementById('imageModal').classList.contains('show')) {
+                if (e.key === 'ArrowLeft') prevModalImage({ stopPropagation: () => {} });
+                if (e.key === 'ArrowRight') nextModalImage({ stopPropagation: () => {} });
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const modal = document.getElementById('imageModal');
+            if (modal.classList.contains('show')) {
+                if (touchEndX < touchStartX - 50) nextModalImage({ stopPropagation: () => {} });
+                if (touchEndX > touchStartX + 50) prevModalImage({ stopPropagation: () => {} });
+            }
+        });
+    </script>
+
+    <!-- 添加记录表单模态框 -->
+    <div class="form-modal" id="recordFormModal">
+        <div class="form-container">
+            <button class="form-close" onclick="closeRecordForm()">×</button>
+            <h3 class="form-title">📝 添加成长记录</h3>
+            
+            <div class="form-group">
+                <label class="form-label">日期</label>
+                <input type="date" class="form-input" id="recordDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">记录类型</label>
+                <select class="form-select" id="recordType">
+                    <option value="growth">成长记录</option>
+                    <option value="milestone">里程碑</option>
+                    <option value="photo">照片</option>
+                    <option value="video">视频</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">记录内容</label>
+                <textarea class="form-textarea" id="recordContent" placeholder="记录派派的成长瞬间..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">上传照片（可选）</label>
+                <input type="file" class="form-file-input" id="recordPhoto" accept="image/*">
+                <label for="recordPhoto" class="form-file-label">
+                    📷 点击选择照片
+                </label>
+            </div>
+            
+            <div class="form-buttons">
+                <button type="button" class="form-btn form-btn-secondary" onclick="closeRecordForm()">取消</button>
+                <button type="button" class="form-btn form-btn-primary" onclick="submitRecord()">保存记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享模态框 -->
+    <div class="form-modal" id="shareModal">
+        <div class="form-container" style="max-width: 400px;">
+            <button class="form-close" onclick="closeShareModal()">×</button>
+            <div class="share-modal-content">
+                <h3 class="form-title">📤 分享成长记录</h3>
+                <div class="share-preview">
+                    <div class="share-title">🎉 派派的成长空间</div>
+                    <div class="share-subtitle">记录派派的每一个精彩瞬间</div>
+                </div>
+                <p style="color: var(--text-secondary); margin: 15px 0;">选择分享方式：</p>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareToWeChat()" style="background: #07C160; color: white;">💬</button>
+                    <button class="share-btn" onclick="shareToQQ()" style="background: #12B7F5; color: white;">🐧</button>
+                    <button class="share-btn" onclick="copyLink()" style="background: var(--accent-color); color: white;">🔗</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户选择模态框 -->
+    <div class="form-modal" id="userModal">
+        <div class="form-container" style="max-width: 400px;">
+            <button class="form-close" onclick="closeUserModal()">×</button>
+            <h3 class="form-title">👤 选择当前用户</h3>
+            <div class="user-selector">
+                <div class="user-option active" onclick="selectUser('爸爸')">
+                    <div class="user-avatar-small" style="background: var(--gradient-blue);">👨</div>
+                    <span>爸爸</span>
+                </div>
+                <div class="user-option" onclick="selectUser('妈妈')">
+                    <div class="user-avatar-small" style="background: var(--gradient-pink);">👩</div>
+                    <span>妈妈</span>
+                </div>
+                <div class="user-option" onclick="selectUser('爷爷')">
+                    <div class="user-avatar-small" style="background: var(--gradient-green);">👴</div>
+                    <span>爷爷</span>
+                </div>
+                <div class="user-option" onclick="selectUser('奶奶')">
+                    <div class="user-avatar-small" style="background: var(--gradient-purple);">👵</div>
+                    <span>奶奶</span>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 14px; text-align: center;">
+                当前用户：<span id="currentUser" style="color: var(--accent-color); font-weight: 600;">爸爸</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- 导出选项模态框 -->
+    <div class="form-modal" id="exportModal">
+        <div class="form-container" style="max-width: 400px;">
+            <button class="form-close" onclick="closeExportModal()">×</button>
+            <h3 class="form-title">📥 导出成长记录</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <button class="form-btn form-btn-primary" onclick="exportToPDF()" style="justify-content: center;">
+                    📄 导出为 PDF 成长手册
+                </button>
+                <button class="form-btn form-btn-primary" onclick="exportToJSON()" style="justify-content: center; background: var(--gradient-blue);">
+                    💾 导出为 JSON 备份
+                </button>
+                <button class="form-btn form-btn-primary" onclick="generateShareImage()" style="justify-content: center; background: var(--gradient-green);">
+                    🖼️ 生成分享卡片
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理员登录模态框 -->
+    <div class="form-modal" id="adminLoginModal">
+        <div class="form-container" style="max-width: 400px;">
+            <button class="form-close" onclick="closeAdminLogin()">×</button>
+            <h3 class="form-title">🔐 管理员登录</h3>
+            
+            <div class="form-group">
+                <label class="form-label">访问密码</label>
+                <input type="password" class="form-input" id="adminPassword" placeholder="请输入密码">
+            </div>
+            
+            <div class="form-buttons">
+                <button type="button" class="form-btn form-btn-secondary" onclick="closeAdminLogin()">取消</button>
+                <button type="button" class="form-btn form-btn-primary" onclick="loginAdmin()">登录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 管理员登录按钮 -->
+    <button class="admin-login" onclick="showAdminLogin()" title="管理员登录">🔐</button>
+</body>
+</html>
